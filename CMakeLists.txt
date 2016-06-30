@@ -3,7 +3,7 @@
 # Version number same as standalone-toolchain.
 # 這個版本號不能比你的手機新，否則產生的 apk 連安裝都辦不到
 # 要跟 standalone-toolchain 寫的版本一樣
-set(MY_TOOLCHAIN_API_LEVEL "android-15")
+set(ANDROID_APK_API_LEVEL 15)
 
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/cmake/android/android.toolchain.cmake")
 
@@ -51,6 +51,8 @@ set(SOURCES
 
 list(APPEND SOURCES "$ENV{ANDROID_NDK_HOME}/sources/android/native_app_glue/android_native_app_glue.c")
 
+set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/apk/libs/${ANDROID_NDK_ABI_NAME})
+
 add_library(${name} SHARED ${SOURCES})
 
 target_link_libraries(${name}
@@ -80,5 +82,4 @@ create_apk(
 	"${CMAKE_SOURCE_DIR}/libs"
 	"${CMAKE_SOURCE_DIR}/android"
 	"${CMAKE_SOURCE_DIR}/assets"
-	"${MY_TOOLCHAIN_API_LEVEL}"
 )
